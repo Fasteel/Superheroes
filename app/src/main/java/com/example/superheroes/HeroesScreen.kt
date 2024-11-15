@@ -1,6 +1,5 @@
 package com.example.superheroes
 
-import android.view.WindowInsets
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -41,7 +39,11 @@ fun HeroesScreen() {
 
 @Composable
 fun HeroesList(heroes: List<Hero>, modifier: Modifier = Modifier) {
-    Surface(modifier = modifier.statusBarsPadding().navigationBarsPadding()) {
+    Surface(
+        modifier = modifier
+            .statusBarsPadding()
+            .navigationBarsPadding()
+    ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.small)),
             contentPadding = PaddingValues(
@@ -91,8 +93,15 @@ fun HeroItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(modifier = modifier.weight(1f)) {
-                Text(stringResource(name), style = MaterialTheme.typography.displaySmall, modifier = modifier.padding(bottom = dimensionResource(R.dimen.small)))
-                Text(stringResource(description), style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    stringResource(name),
+                    style = MaterialTheme.typography.displaySmall,
+                    modifier = modifier.padding(bottom = dimensionResource(R.dimen.small))
+                )
+                Text(
+                    stringResource(description),
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
             Image(
                 painter = painterResource(image),
