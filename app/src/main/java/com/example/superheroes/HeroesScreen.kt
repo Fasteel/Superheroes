@@ -9,14 +9,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,16 +35,45 @@ import com.example.superheroes.ui.theme.SuperheroesTheme
 
 @Composable
 fun HeroesScreen() {
-    HeroesList(heroes = HeroesRepository.heroes + HeroesRepository.heroes)
+    Scaffold(
+        topBar = { HeroTopBar() }
+    ) { paddingValues ->
+        HeroesList(
+            heroes = HeroesRepository.heroes + HeroesRepository.heroes,
+            modifier = Modifier.padding(paddingValues)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HeroTopBar() {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(stringResource(R.string.app_name), style = MaterialTheme.typography.displayLarge)
+        }
+    )
+}
+
+@Composable
+@Preview
+fun HeroTopBarPreviewDark() {
+    SuperheroesTheme(darkTheme = true) {
+        HeroTopBar()
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun HeroTopBarPreviewLight() {
+    SuperheroesTheme(darkTheme = false) {
+        HeroTopBar()
+    }
 }
 
 @Composable
 fun HeroesList(heroes: List<Hero>, modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier
-            .statusBarsPadding()
-            .navigationBarsPadding()
-    ) {
+    Surface(modifier = modifier) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.small)),
             contentPadding = PaddingValues(
@@ -85,7 +115,7 @@ fun HeroItem(
     @DrawableRes image: Int,
     modifier: Modifier = Modifier
 ) {
-    Card(modifier = modifier, elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
+    Card(elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)) {
         Row(
             modifier = modifier
                 .padding(dimensionResource(R.dimen.medium))
