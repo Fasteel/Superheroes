@@ -64,7 +64,7 @@ fun HeroTopBarPreviewDark() {
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview
 fun HeroTopBarPreviewLight() {
     SuperheroesTheme(darkTheme = false) {
         HeroTopBar()
